@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery To-Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin: 50px;
+    }
+    .todo-container {
+      width: 350px;
+      background: #7f6868;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #161313;
+    }
+    .input-row {
+      display: flex;
+      margin-bottom: 15px;
+    }
+    .input-row input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #452f2f;
+      border-radius: 6px;
+    }
+    .input-row button {
+      margin-left: 10px;
+      padding: 10px;
+      border: none;
+      background: #242906;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      background: #f9f9f9;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    li.completed {
+      text-decoration: line-through;
+      background: #d4edda;
+      color: #555;
+    }
+    li:hover {
+      background: #e9ecef;
+    }
+    .delete-btn {
+      color: red;
+      font-weight: bold;
+      cursor: pointer;
+      margin-left: 15px;
+    }
+    .filters {
+      margin-top: 15px;
+      text-align: center;
+    }
+    .filters button {
+      margin: 0 5px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #8b8282;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="todo-container">
+    <h2>My To-Do List</h2>
+    <div class="input-row">
+      <input type="text" id="taskInput" placeholder="Enter a new task">
+      <button id="addTask">Add</button>
+    </div>
+    <ul id="taskList"></ul>
+    <div class="filters">
+      <button data-filter="all">All</button>
+      <button data-filter="completed">Completed</button>
+      <button data-filter="pending">Pending</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+
+      // Add Task
+      $("#addTask").click(function(){
+        addTask();
+      });
+
+      $("#taskInput").keypress(function(e){
+        if(e.which === 13){ // Enter key
+          addTask();
+        }
+      });
+
+      function addTask(){
+        let taskText = $("#taskInput").val().trim();
+        if(taskText !== ""){
+          let li = $("<li></li>").text(taskText);
+          let delBtn = $("<span class='delete-btn'>&times;</span>");
+          li.append(delBtn).hide().fadeIn(400);
+          $("#taskList").append(li);
+          $("#taskInput").val("");
+        }
+      }
+
+      // Mark Complete
+      $("#taskList").on("click", "li", function(e){
+        if(!$(e.target).hasClass("delete-btn")){
+          $(this).toggleClass("completed");
+        }
+      });
+
+      // Delete Task
+      $("#taskList").on("click", ".delete-btn", function(){
+        $(this).parent().slideUp(300, function(){
+          $(this).remove();
+        });
+      });
+
+      // Hover Effect
+      $("#taskList").on("mouseenter", "li", function(){
+        $(this).css("background","#dee2e6");
+      }).on("mouseleave", "li", function(){
+        $(this).css("background", $(this).hasClass("completed") ? "#d4edda" : "#f9f9f9");
+      });
+
+      // Filter
+      $(".filters button").click(function(){
+        let filter = $(this).data("filter");
+        if(filter === "all"){
+          $("#taskList li").fadeIn();
+        } else if(filter === "completed"){
+          $("#taskList li").hide();
+          $("#taskList li.completed").fadeIn();
+        } else {
+          $("#taskList li").hide();
+          $("#taskList li:not(.completed)").fadeIn();
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<style>
+
+body{
+background:#f5f1ea;
+font-family:Inter;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 20px rgba(0,0,0,0.08);
+width:350px;
+}
+
+h2{
+margin-bottom:20px;
+}
+
+.stat{
+margin:10px 0;
+}
+
+button{
+padding:10px;
+width:100%;
+background:black;
+color:white;
+border:none;
+border-radius:5px;
+margin-top:15px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Productivity Dashboard</h2>
+
+<div class="stat">Average Score: {{ avg_score }}</div>
+<div class="stat">Highest Score: {{ max_score }}</div>
+<div class="stat">Lowest Score: {{ min_score }}</div>
+<div class="stat">Total Entries: {{ total_entries }}</div>
+
+<a href="/">
+<button>Back</button>
+</a>
+
+</div>
+
+</body>
+</html>

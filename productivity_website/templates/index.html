@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Productivity Analyzer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #f5f1ea;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container */
+.container {
+    background-color: #ffffff;
+    padding: 40px;
+    width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* Title */
+h2 {
+    color: #1a1a1a;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #e0dcd5;
+    border-radius: 8px;
+    background-color: #faf8f5;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #1a1a1a;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background-color: #1a1a1a;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #333333;
+}
+
+/* Secondary buttons */
+.secondary-btn {
+    background-color: #e8e3db;
+    color: #1a1a1a;
+}
+
+.secondary-btn:hover {
+    background-color: #d8d2c8;
+}
+
+/* Reset button */
+.reset-btn {
+    background-color: #f2dede;
+    color: #8a1f1f;
+}
+
+.reset-btn:hover {
+    background-color: #e5caca;
+}
+
+/* Result box */
+.result-box {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #faf8f5;
+    border-radius: 8px;
+    border: 1px solid #e0dcd5;
+}
+
+/* Levels */
+.high {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.medium {
+    color: #b26a00;
+    font-weight: 600;
+}
+
+.low {
+    color: #c62828;
+    font-weight: 600;
+}
+
+/* Suggestion */
+.suggestion {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #444;
+}
+
+/* Footer */
+.footer {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #888;
+    text-align: center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Productivity Analyzer</h2>
+
+<form method="POST">
+
+<input type="number" step="0.1" name="study" placeholder="Study Hours" required>
+
+<input type="number" step="0.1" name="sleep" placeholder="Sleep Hours" required>
+
+<input type="number" step="0.1" name="phone" placeholder="Phone Usage Hours" required>
+
+<input type="number" step="0.1" name="exercise" placeholder="Exercise Hours" required>
+
+<button type="submit">Analyze Productivity</button>
+
+</form>
+
+<!-- Graph Button -->
+<a href="/graph">
+<button class="secondary-btn">View Productivity Graph</button>
+</a>
+
+<!-- Dashboard Button -->
+<a href="/dashboard">
+<button class="secondary-btn">View Dashboard</button>
+</a>
+
+<!-- Reset Button -->
+<a href="/reset" onclick="return confirm('Are you sure you want to delete all data?');">
+<button class="reset-btn">Reset Data</button>
+</a>
+
+{% if score is not none %}
+
+<div class="result-box">
+
+<p><strong>Productivity Score:</strong> {{ score }}</p>
+
+<p><strong>Productivity Level:</strong> 
+<span class="
+{% if level == 'High Productivity' %}
+high
+{% elif level == 'Medium Productivity' %}
+medium
+{% else %}
+low
+{% endif %}
+">
+{{ level }}
+</span>
+</p>
+
+{% if suggestion %}
+<p class="suggestion">
+<strong>Suggestion:</strong> {{ suggestion }}
+</p>
+{% endif %}
+
+</div>
+
+{% endif %}
+
+<div class="footer">
+Student Productivity Analyzer • Flask ML Project
+</div>
+
+</div>
+
+</body>
+</html>
